@@ -24,13 +24,16 @@ w2 = 2 * pi * freq2;
 x = r1 * cos( w1 * t ) + r2 * cos(w2 * t);
 y = r1 * sin( w1 * t ) + r2 * sin(w2 * t);
 
-% Show the trajectory.
-figure;
-plot(x, y);
+% Default comet.
+figure(1);
+comet(x, y);
 title('Trajectory');
 xlabel('x');
 ylabel('y');
 
-% Dynamically plot the trajectory.
-figure;
-newcomet(x, y, 150);
+% new comet.
+figure(2);
+title('Trajectory');
+xlabel('x');
+ylabel('y');
+newcomet(x, y);
