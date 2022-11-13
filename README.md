@@ -1,4 +1,4 @@
-# MATLAB-s-dynamic-plotting-library
+# dynamic-plotting-library-in-MATLAB
 
 MATLAB has a dynamic plotting library called comet which is used to trace trajectories using an animated graph in which a circle (the comet head) traces
 the data points on the screen. The comet body is a trailing segment that follows the head. The tail is a solid line that traces the entire function.
