@@ -17,8 +17,7 @@ function newcomet(varargin)
 %   Copyright 1984-2007 The MathWorks, Inc. 
 %   $Revision: 5.12.4.4 $  $Date: 2008/01/21 14:59:45 $
 
-%   Yaohu Hu <huyaoyu@sjtu.edu.cn>, Shanghai Jiao Tong University, 2013
-%   Revised Jan-17-2013.
+%   Revision.
 %   Modified the color of the tail. Then the plot looks much more like
 %   a dynamic trajectory. The function of parameter 'p' has been also
 %   changed. User can set p = -1 to access original defualt functionality
@@ -51,6 +50,9 @@ if ~ishold(ax)
 end
 co = get(ax,'colororder');
 
+video = VideoWriter('Trace.avi');
+video.FrameRate = 60;
+open(video)
 
 if size(co,1)>=3
   % Choose first three colors for head, body, and tail
@@ -58,20 +60,20 @@ if size(co,1)>=3
               'xdata',x(1),'ydata',y(1));
   body = line('parent',ax,'color',co(2,:),'linestyle','-','erase','none', ...
               'xdata',[],'ydata',[]);
-%   tail = line('parent',ax,'color',co(3,:),'linestyle','-','erase','none', ...
-%               'xdata',[],'ydata',[]);
-  tail = line('parent',ax,'color',[1,1,1],'linestyle','-','erase','none', ...
-      'xdata',[],'ydata',[]);
+  tail = line('parent',ax,'color',co(3,:),'linestyle','-','erase','none', ...
+               'xdata',[],'ydata',[]);
+%   tail = line('parent',ax,'color',[1,1,1],'linestyle','-','erase','none', ...
+%       'xdata',[],'ydata',[]);
 else
   % Choose first three colors for head, body, and tail
   head = line('parent',ax,'color',co(1,:),'marker','o','erase','xor', ...
               'xdata',x(1),'ydata',y(1));
   body = line('parent',ax,'color',co(1,:),'linestyle','--','erase','none', ...
               'xdata',[],'ydata',[]);
-%   tail = line('parent',ax,'color',co(1,:),'linestyle','-','erase','none', ...
-%               'xdata',[],'ydata',[]);
-  tail = line('parent',ax,'color',[1,1,1],'linestyle','-','erase','none', ...
+  tail = line('parent',ax,'color',co(1,:),'linestyle','-','erase','none', ...
               'xdata',[],'ydata',[]);
+%   tail = line('parent',ax,'color',[1,1,1],'linestyle','-','erase','none', ...
+%               'xdata',[],'ydata',[]);
 end
 
 m = length(x);
@@ -99,18 +101,22 @@ try
         set(body,'xdata',x(j),'ydata',y(j))
         set(tail,'xdata',x(j-k),'ydata',y(j-k))
         drawnow
+        % Write video to file
+        writeVideo(video,getframe(gcf));
     end
 
     % Clean up the tail
-%     for i = m+1:m+k
-%         j = i-1:i;
-%         set(tail,'xdata',x(j-k),'ydata',y(j-k))
-%         drawnow
-%     end
+    for i = m+1:m+k
+        j = i-1:i;
+        set(tail,'xdata',x(j-k),'ydata',y(j-k))
+        drawnow
+    end
+    
 catch E
     if ~strcmp(E.identifier, 'MATLAB:class:InvalidHandle')
         rethrow(E);
     end
+close(video)
 end
 
 function [minx,maxx] = minmax(x)
