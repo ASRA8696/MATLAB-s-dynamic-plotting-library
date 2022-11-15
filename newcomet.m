@@ -12,12 +12,7 @@ function newcomet(varargin)
 %
 %   See also COMET3.
 
-%   Charles R. Denham, MathWorks, 1989.
-%   Revised 2-9-92, LS and DTP; 8-18-92, 11-30-92 CBM.
-%   Copyright 1984-2007 The MathWorks, Inc. 
-%   $Revision: 5.12.4.4 $  $Date: 2008/01/21 14:59:45 $
-
-%   Revision.
+%   REVISION :
 %   Modified the color of the tail. Then the plot looks much more like
 %   a dynamic trajectory. The function of parameter 'p' has been also
 %   changed. User can set p = -1 to access original defualt functionality
